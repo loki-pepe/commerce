@@ -4,11 +4,29 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
+from .models import User, Listing, Bid, Comment
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", {
+        "listings": Listing.objects.all()
+    })
+
+
+def categories(request):
+    ctgr = request.GET.get("c", None)  
+    try:
+        index = list(map(str.lower, [c[1].lower() for c in Listing.category.field.choices])).index(ctgr.lower())
+    except ValueError:
+        return HttpResponseRedirect(reverse("categories"))
+    except AttributeError:
+        return render(request, "auctions/categories.html", {
+            "categories": [c[1] for c in Listing.category.field.choices]
+        })
+    return render(request, "auctions/index.html", {
+        "category": [c[1] for c in Listing.category.field.choices][index],
+        "listings": Listing.objects.filter(category=[c[0] for c in Listing.category.field.choices][index])
+    })
 
 
 def login_view(request):

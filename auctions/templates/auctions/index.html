@@ -1,7 +1,37 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+    {% if category %}
+        <h2>{{ category }}</h2>
+    {% else %}
+        <h2>Active Listings</h2>
+    {% endif %}
 
-    TODO
+    <ul>
+        {% if listings %}
+            {% for listing in listings %}
+                <li>
+                    <div>
+                        <h4>{{ listing.title }}</h4>
+                    </div>
+                    <div>
+                        {% if listing.image %}
+                            <img src="{{ listing.image }}" style="max-width:10%;">
+                        {% else %}
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930" style="max-width:10%;">
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ listing.description }}
+                    </div>
+                    <div>
+                        Category: {{ listing.get_category_display }}
+                        <h4>Price: ${{ listing.start_bid }}</h4>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+            No listings.
+        {% endif %}
+    </ul>
 {% endblock %}
