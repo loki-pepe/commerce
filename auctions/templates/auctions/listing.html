@@ -1,0 +1,56 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+        <div>
+            <form action="{% url 'listing' listing.id %}" method="post">
+                {% csrf_token %}
+                {% if watchlist %}
+                    <button type="submit" name="w_list" value="remove">Remove from watchlist</button>
+                {% else %}
+                    <button type="submit" name="w_list" value="add">Add to watchlist</button>
+                {% endif %}
+            </form>
+        </div>
+    {% endif %}
+    <div>
+        <h3>{{ listing.title }}</h3>
+    </div>
+    <div>
+        <h5>Category: <a href="{% url 'categories' %}?c={{ listing.get_category_display }}">{{ listing.get_category_display }}</a></h5>
+    </div>
+    <div>
+        {% if listing.image %}
+            <img src="{{ listing.image }}" style="max-width:200px;">
+        {% else %}
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930" style="max-width:200px;">
+        {% endif %}
+    </div>
+    <div>
+        {{ listing.description}}
+    </div>
+    <div>
+        <h4>Current price: ${{ listing.start_bid}}</h4>
+    </div>
+    <div>
+        <h5>
+            Comments
+        </h5>
+    </div>
+    {% if comments %}
+        <div>
+            {% for comment in comments %}
+                <div>
+                    <strong>{{ comment.commenter }}</strong>
+                </div>
+                <div>
+                    {{ comment.text }}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div>
+            No comments.
+        </div>
+    {% endif %}
+{% endblock %}
