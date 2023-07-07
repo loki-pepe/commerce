@@ -38,7 +38,7 @@ def categories(request):
 
 
 def listing_view(request, listing_id):
-    # tu si stao
+    # tu si stao + test
     if request.method == "POST":
         if request.POST["w_list"]:
             listing = Listing.objects.get(pk=listing_id)
