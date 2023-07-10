@@ -30,7 +30,11 @@
         {{ listing.description}}
     </div>
     <div>
-        <h4>Current price: ${{ listing.start_bid}}</h4>
+        {% if bid %}
+            <h4>Current bid: ${{ bid.amount }}</h4>
+        {% else %}
+            <h4>Starting price: ${{ listing.start_bid }}</h4>
+        {% endif %}
     </div>
     <div>
         <h5>

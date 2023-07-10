@@ -38,7 +38,7 @@ def categories(request):
 
 
 def listing_view(request, listing_id):
-    # tu si stao + test
+    # tu si stao
     if request.method == "POST":
         if request.POST["w_list"]:
             listing = Listing.objects.get(pk=listing_id)
@@ -57,10 +57,17 @@ def listing_view(request, listing_id):
         watchlist = True
     else:
         watchlist = False
+
+    try:
+        bid = listing.bids.get(highest_bid=True)
+    except Bid.DoesNotExist:
+        bid = None
+
     return render(request, "auctions/listing.html", {
         "listing": listing,
         "comments": comments,
-        "watchlist": watchlist
+        "watchlist": watchlist,
+        "bid": bid,
     })
 
 
@@ -92,7 +99,6 @@ def logout_view(request):
 @login_required
 def new_listing(request):
     if request.method == "POST":
-        user = authenticate(request)
         form = ListingForm(request.POST)
         if form.is_valid():
             new_listing = form.save(commit=False)
