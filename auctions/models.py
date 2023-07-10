@@ -15,7 +15,7 @@ class Listing(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
     title = models.CharField(max_length=64)
     description = models.CharField(max_length=500)
-    start_bid = models.DecimalField(blank=True, max_digits=12, decimal_places=2, validators=[MinValueValidator(limit_value=0)])
+    start_price = models.DecimalField(blank=True, max_digits=12, decimal_places=2, validators=[MinValueValidator(limit_value=0)])
     category = models.CharField(
         max_length=2,
         choices=CATEGORY_CHOICES,

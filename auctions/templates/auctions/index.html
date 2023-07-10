@@ -26,7 +26,13 @@
                     </div>
                     <div>
                         Category: <a href="{% url 'categories' %}?c={{ listing.get_category_display }}">{{ listing.get_category_display }}</a>
-                        <h4>Price: ${{ listing.start_bid }}</h4>
+                        {% for bid in listing.bids.all %}
+                            {% if bid.highest_bid %}
+                                <h4>Current bid: ${{ bid.amount }}</h4>
+                            {% endif %}
+                        {% empty %}
+                            <h4>Starting price: ${{ listing.start_price }}</h4>
+                        {% endfor %}
                     </div>
                 </li>
             {% endfor %}
