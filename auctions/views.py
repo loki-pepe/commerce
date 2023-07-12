@@ -48,7 +48,8 @@ def listing_view(request, listing_id):
                 request.user.watchlist.remove(listing)
             return HttpResponseRedirect(reverse("listing", kwargs={"listing_id":listing_id}))
         if request.POST.get("cmnt"):
-            print("Heyyyaaa")
+            new_comment = Comment(commenter=request.user, listing=listing, text=request.POST.get("cmnt"))
+            new_comment.save()
 
     try:
         listing = Listing.objects.get(pk=listing_id)
