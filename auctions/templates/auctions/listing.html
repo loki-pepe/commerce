@@ -57,4 +57,17 @@
             No comments.
         </div>
     {% endif %}
+    {% if user.is_authenticated %}
+        <div>
+            <form action="{% url 'listing' listing.id %}" method="post">
+                {% csrf_token %}
+                <div>
+                    <textarea autofocus="off" name="cmnt" placeholder="Comment"></textarea>
+                </div>
+                <div>
+                    <button type="submit">Post</button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}
