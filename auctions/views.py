@@ -50,6 +50,8 @@ def listing_view(request, listing_id):
         if request.POST.get("cmnt"):
             new_comment = Comment(commenter=request.user, listing=listing, text=request.POST.get("cmnt"))
             new_comment.save()
+        if request.POST.get("bd"):
+            print("ok")
 
     try:
         listing = Listing.objects.get(pk=listing_id)

@@ -36,6 +36,17 @@
             <h4>Starting price: ${{ listing.start_price }}</h4>
         {% endif %}
     </div>
+    {% if user.is_authenticated %}
+    <div>
+        <h4>Make a bid:</h4>
+        <form action="{% url 'listing' listing.id %}" method="post">
+            {% csrf_token %}
+            <input type="number" min="{{ bid.amount }}" step="0.01" name="bd">
+            <input type="number" min="{{ listing.start_price }}" step="0.01" name="bd">
+            <button type="input">Bid</button>
+        </form>
+    </div>
+    {% endif %}
     <div>
         <h5>
             Comments
