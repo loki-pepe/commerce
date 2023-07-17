@@ -4,6 +4,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from decimal import Decimal
 
 from .models import User, Listing, Bid, Comment
 from .forms import ListingForm
@@ -52,21 +53,29 @@ def listing_view(request, listing_id):
             new_comment.save()
         if request.POST.get("bd"):
             try:
-                amount = float(request.POST.get("bd"))
+                amount = Decimal(request.POST.get("bd"))
             except ValueError:
                 # PRIVREMENO
                 error = 1
-            if listing.current_bid:
-                if amount > listing.current_bid.amount:
-                    listing.current_bid.highest_bid = False
-                    listing.current_bid.save()
+            else:
+                try:
+                    current_bid = listing.bids.get(highest_bid=True)
+                    price = current_bid.amount
+                except Bid.DoesNotExist:
+                    current_bid = None
+                    price = listing.start_price
+                if current_bid and amount > price:
+                    current_bid.highest_bid = False
+                    current_bid.save()
                     new_bid = Bid(buyer=request.user, listing=listing, amount=amount)
                     new_bid.save()
-                    listing.current_bid = new_bid
-                    listing.save()
-            else:
-                # PRIVREMENO
-                error = 2
+                elif not current_bid and amount >= price:
+                    new_bid = Bid(buyer=request.user, listing=listing, amount=amount)
+                    new_bid.save()
+                else:
+                    # PRIVREMENO
+                    error = 2
+                    print("nije proslo")
 
     try:
         listing = Listing.objects.get(pk=listing_id)
