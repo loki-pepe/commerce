@@ -1,6 +1,11 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+    {% if not listing.active_status %}
+        <div>
+            <h4>This listing is no longer active.</h4>
+        </div>
+    {% endif %}
     {% if user.is_authenticated %}
         <div>
             <form action="{% url 'listing' listing.id %}" method="post">
@@ -31,25 +36,43 @@
     </div>
     <div>
         {% if bid %}
-            <h4>Current bid: ${{ bid.amount }}</h4>
+            {% if listing.active_status %}
+                <h4>Current bid: ${{ bid.amount }}</h4>
+            {% else %}
+                <h4>Winning bid: ${{ bid.amount }}</h4>
+            {% endif %}
         {% else %}
             <h4>Starting price: ${{ listing.start_price }}</h4>
         {% endif %}
     </div>
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and listing.active_status %}
     <div>
-        <h4>Make a bid:</h4>
-        <form action="{% url 'listing' listing.id %}" method="post">
-            {% csrf_token %}
-            {% if bid %}
-                <input type="number" min="{{ bid.amount }}" step="0.01" name="bd">
-            {% else %}
-                <input type="number" min="{{ listing.start_price }}" step="0.01" name="bd">
-            {% endif %}
-            <button type="input">Bid</button>
-        </form>
+        {% if not user == listing.seller %}
+            <div>
+                <h4>Make a bid:</h4>
+            </div>
+            <div>
+                <form action="{% url 'listing' listing.id %}" method="post">
+                    {% csrf_token %}
+                    {% if bid %}
+                        <input type="number" min="{{ bid.amount }}" step="0.01" name="bd">
+                    {% else %}
+                        <input type="number" min="{{ listing.start_price }}" step="0.01" name="bd">
+                    {% endif %}
+                    <button type="submit">Bid</button>
+                </form>
+            </div>
+        {% else %}
+            <div>
+                <form action="{% url 'listing' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="close" value="close">Close the listing</button>
+                </form>
+            </div>
+        {% endif %}
     </div>
     {% endif %}
+
     <div>
         <h5>
             Comments
@@ -71,7 +94,7 @@
             No comments.
         </div>
     {% endif %}
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and listing.active_status %}
         <div>
             <form action="{% url 'listing' listing.id %}" method="post">
                 {% csrf_token %}

@@ -12,7 +12,7 @@ from .forms import ListingForm
 
 def index(request):
     return render(request, "auctions/index.html", {
-        "listings": Listing.objects.all()
+        "listings": Listing.objects.filter(active_status=True)
     })
 
 
@@ -28,9 +28,9 @@ def categories(request):
         })
 
     if index == 0:
-        listings = Listing.objects.all()
+        listings = Listing.objects.filter(active_status=True)
     else:
-        listings = Listing.objects.filter(category=[c[0] for c in Listing.category.field.choices][index])
+        listings = Listing.objects.filter(category=[c[0] for c in Listing.category.field.choices][index], active_status=True)
 
     return render(request, "auctions/index.html", {
         "category": [c[1] for c in Listing.category.field.choices][index],
@@ -75,7 +75,10 @@ def listing_view(request, listing_id):
                 else:
                     # PRIVREMENO
                     error = 2
-                    print("nije proslo")
+        if request.POST.get("close"):
+            if request.user == listing.seller:
+                listing.active_status = False
+                listing.save()
 
     try:
         listing = Listing.objects.get(pk=listing_id)
