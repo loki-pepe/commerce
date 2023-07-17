@@ -41,8 +41,11 @@
         <h4>Make a bid:</h4>
         <form action="{% url 'listing' listing.id %}" method="post">
             {% csrf_token %}
-            <input type="number" min="{{ bid.amount }}" step="0.01" name="bd">
-            <input type="number" min="{{ listing.start_price }}" step="0.01" name="bd">
+            {% if bid %}
+                <input type="number" min="{{ bid.amount }}" step="0.01" name="bd">
+            {% else %}
+                <input type="number" min="{{ listing.start_price }}" step="0.01" name="bd">
+            {% endif %}
             <button type="input">Bid</button>
         </form>
     </div>

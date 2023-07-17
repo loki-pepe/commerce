@@ -38,20 +38,35 @@ def categories(request):
 
 
 def listing_view(request, listing_id):
-    # tu si stao, treba riješit za bez logina
+    # tu si stao
     if request.method == "POST":
         listing = Listing.objects.get(pk=listing_id)
         if request.POST.get("w_list"):
             if request.POST.get("w_list") == "add":
                 request.user.watchlist.add(listing)
-            else:
+            elif request.POST.get("w_list") == "remove":
                 request.user.watchlist.remove(listing)
             return HttpResponseRedirect(reverse("listing", kwargs={"listing_id":listing_id}))
         if request.POST.get("cmnt"):
             new_comment = Comment(commenter=request.user, listing=listing, text=request.POST.get("cmnt"))
             new_comment.save()
         if request.POST.get("bd"):
-            print("ok")
+            try:
+                amount = float(request.POST.get("bd"))
+            except ValueError:
+                # PRIVREMENO
+                error = 1
+            if listing.current_bid:
+                if amount > listing.current_bid.amount:
+                    listing.current_bid.highest_bid = False
+                    listing.current_bid.save()
+                    new_bid = Bid(buyer=request.user, listing=listing, amount=amount)
+                    new_bid.save()
+                    listing.current_bid = new_bid
+                    listing.save()
+            else:
+                # PRIVREMENO
+                error = 2
 
     try:
         listing = Listing.objects.get(pk=listing_id)
