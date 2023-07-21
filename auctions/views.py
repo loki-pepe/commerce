@@ -78,6 +78,10 @@ def listing_view(request, listing_id):
         if request.POST.get("close"):
             if request.user == listing.seller:
                 listing.active_status = False
+                try:
+                    listing.buyer = listing.bids.get(highest_bid=True).buyer
+                except Bid.DoesNotExist:
+                    pass
                 listing.save()
 
     try:

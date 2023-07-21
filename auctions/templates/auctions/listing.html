@@ -1,12 +1,20 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+    <div>
+        {{ listing.time }}
+    </div>
     {% if not listing.active_status %}
         <div>
             <h4>This listing is no longer active.</h4>
         </div>
     {% endif %}
     {% if user.is_authenticated %}
+        {% if user == listing.buyer %}
+            <div>
+                <h4>You have won the auction.</h4>
+            </div>
+        {% endif %}
         <div>
             <form action="{% url 'listing' listing.id %}" method="post">
                 {% csrf_token %}
