@@ -40,7 +40,6 @@ def categories(request):
 
 
 def listing_view(request, listing_id):
-    # tu si stao
     if request.method == "POST":
         listing = Listing.objects.get(pk=listing_id)
         if request.POST.get("w_list"):
@@ -149,7 +148,11 @@ def new_listing(request):
             new_listing.seller = request.user
             new_listing.save()
             form.save_m2m()
-        return HttpResponseRedirect(reverse("index"))
+            messages.success(request, "Listing successfully created.")
+            return HttpResponseRedirect(reverse("listing", kwargs={"listing_id":new_listing.id}))
+        else:
+            messages.error(request, "Something went wrong. Did you omit a required field?")
+            return HttpResponseRedirect(reverse("new"))
     return render(request, "auctions/create.html", {
         "form": ListingForm()
     })
