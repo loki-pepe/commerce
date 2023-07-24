@@ -2,6 +2,13 @@
 
 {% block body %}
     <div>
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div>
         {{ listing.time }}
     </div>
     {% if not listing.active_status %}

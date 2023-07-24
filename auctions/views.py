@@ -1,10 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 from .models import User, Listing, Bid, Comment
 from .forms import ListingForm
@@ -54,9 +55,8 @@ def listing_view(request, listing_id):
         if request.POST.get("bd"):
             try:
                 amount = Decimal(request.POST.get("bd"))
-            except ValueError:
-                # PRIVREMENO
-                error = 1
+            except InvalidOperation:
+                messages.error(request, "Invalid bid.")
             else:
                 try:
                     current_bid = listing.bids.get(highest_bid=True)
@@ -64,17 +64,20 @@ def listing_view(request, listing_id):
                 except Bid.DoesNotExist:
                     current_bid = None
                     price = listing.start_price
-                if current_bid and amount > price:
-                    current_bid.highest_bid = False
-                    current_bid.save()
-                    new_bid = Bid(buyer=request.user, listing=listing, amount=amount)
-                    new_bid.save()
-                elif not current_bid and amount >= price:
-                    new_bid = Bid(buyer=request.user, listing=listing, amount=amount)
-                    new_bid.save()
+                if current_bid:
+                    if amount > price:
+                        current_bid.highest_bid = False
+                        current_bid.save()
+                        new_bid = Bid(buyer=request.user, listing=listing, amount=amount)
+                        new_bid.save()
+                    else:
+                        messages.error(request, "Your bid must be greater than the previous bid.")
                 else:
-                    # PRIVREMENO
-                    error = 2
+                    if amount >= price:
+                        new_bid = Bid(buyer=request.user, listing=listing, amount=amount)
+                        new_bid.save()
+                    else:
+                        messages.error(request, "Your bid must be at least as large as the starting price.")
         if request.POST.get("close"):
             if request.user == listing.seller:
                 listing.active_status = False
