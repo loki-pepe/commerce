@@ -69,12 +69,14 @@ def listing_view(request, listing_id):
                         current_bid.save()
                         new_bid = Bid(buyer=request.user, listing=listing, amount=amount)
                         new_bid.save()
+                        messages.success(request, "Bid successful.")
                     else:
                         messages.error(request, "Your bid must be greater than the previous bid.")
                 else:
                     if amount >= price:
                         new_bid = Bid(buyer=request.user, listing=listing, amount=amount)
                         new_bid.save()
+                        messages.success(request, "Bid successful.")
                     else:
                         messages.error(request, "Your bid must be at least as large as the starting price.")
         if request.POST.get("close"):
@@ -190,4 +192,11 @@ def watchlist(request):
     return render(request, "auctions/index.html", {
         "category": "Watchlist",
         "listings": request.user.watchlist.all()
+    })
+
+@login_required
+def my_listings(request):
+    return render(request, "auctions/index.html", {
+        "category": "My Listings",
+        "listings": Listing.objects.filter(seller=request.user)
     })
