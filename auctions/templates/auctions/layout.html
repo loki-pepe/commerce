@@ -28,10 +28,10 @@
                     <a class="nav-link" href="{% url 'new' %}">Create Listing</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
+                    <a class="nav-link" href="{% url 'watchlist' %}"><button>{{ request.watchlist_count }}</button>Watchlist</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'my_listings' %}">My Listings</a>
+                    <a class="nav-link" href="{% url 'my_listings' %}"><button>{{ request.my_listings_count }}</button>My Listings</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Log Out</a>

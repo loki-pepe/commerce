@@ -198,5 +198,5 @@ def watchlist(request):
 def my_listings(request):
     return render(request, "auctions/index.html", {
         "category": "My Listings",
-        "listings": Listing.objects.filter(seller=request.user)
+        "listings": Listing.objects.filter(seller=request.user),
     })
