@@ -12,7 +12,7 @@
             {% for listing in listings %}
                 <li>
                     <div>
-                        <h4><a href="{% url 'listing' listing.id %}">{{ listing.title }}</a></h4>
+                        <h3><a href="{% url 'listing' listing.id %}">{{ listing.title }}</a></h3>
                     </div>
                     <div>
                         {% if listing.image %}
@@ -26,19 +26,21 @@
                     </div>
                     <div>
                         Category: <a href="{% url 'categories' %}?c={{ listing.get_category_display }}">{{ listing.get_category_display }}</a>
+                    </div>
+                    <div>
                         {% for bid in listing.bids.all %}
                             {% if bid.highest_bid %}
                                 {% if listing.active_status %}
-                                    <h4>Current bid: ${{ bid.amount }}</h4>
+                                    Current bid: ${{ bid.amount }}
                                 {% else %}
-                                    <h4>Sold for ${{ bid.amount }}</h4>
+                                    Sold for ${{ bid.amount }}
                                 {% endif %}
                             {% endif %}
                         {% empty %}
                             {% if listing.active_status %}
-                                <h4>Starting price: ${{ listing.start_price }}</h4>
+                                Starting price: ${{ listing.start_price }}
                             {% else %}
-                                <h4>Closed</h4>
+                                Closed
                             {% endif %}
                         {% endfor %}
                     </div>
