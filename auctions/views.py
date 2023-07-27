@@ -200,3 +200,10 @@ def my_listings(request):
         "category": "My Listings",
         "listings": Listing.objects.filter(seller=request.user),
     })
+
+@login_required
+def bought_items(request):
+    return render(request, "auctions/index.html", {
+        "category": "Bought Items",
+        "listings": Listing.objects.filter(buyer=request.user)
+    })

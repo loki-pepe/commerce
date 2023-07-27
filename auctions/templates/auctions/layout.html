@@ -34,6 +34,9 @@
                     <a class="nav-link" href="{% url 'my_listings' %}"><button>{{ request.my_listings_count }}</button>My Listings</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'bought_items' %}"><button>{{ request.bought_items_count }}</button>Bought Items</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                 </li>
             {% else %}
