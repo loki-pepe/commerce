@@ -16,35 +16,35 @@
                 Not signed in.
             {% endif %}
         </div>
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+        <ul>
+            <li>
+                <a href="{% url 'index' %}">Active Listings</a>
             </li>
             <li>
-                <a class="nav-link" href="{% url 'categories' %}">Categories</a>
+                <a href="{% url 'categories' %}">Categories</a>
             </li>
             {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'new' %}">Create Listing</a>
+                <li>
+                    <a href="{% url 'new' %}">Create Listing</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'watchlist' %}"><button>{{ request.watchlist_count }}</button>Watchlist</a>
+                <li>
+                    <a href="{% url 'watchlist' %}"><button>{{ request.watchlist_count }}</button>Watchlist</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'my_listings' %}"><button>{{ request.my_listings_count }}</button>My Listings</a>
+                <li>
+                    <a href="{% url 'my_listings' %}"><button>{{ request.my_listings_count }}</button>My Listings</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'bought_items' %}"><button>{{ request.bought_items_count }}</button>Bought Items</a>
+                <li>
+                    <a href="{% url 'bought_items' %}"><button>{{ request.bought_items_count }}</button>Bought Items</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                <li>
+                    <a href="{% url 'logout' %}">Log Out</a>
                 </li>
             {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                <li>
+                    <a href="{% url 'login' %}">Log In</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                <li>
+                    <a href="{% url 'register' %}">Register</a>
                 </li>
             {% endif %}
         </ul>
