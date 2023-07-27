@@ -47,7 +47,16 @@
             {% if listing.active_status %}
                 <h4>Current bid: ${{ bid.amount }}</h4>
             {% else %}
-                <h4>Winning bid: ${{ bid.amount }}</h4>
+                <div>
+                    <h4>Winning bid: ${{ bid.amount }}</h4>
+                </div>
+                <div>
+                    {% if listing.buyer == user %}
+                        by <strong>you</strong>
+                    {% else %}
+                        by <strong>{{ listing.buyer }}</strong>
+                    {% endif %}
+                </div>
             {% endif %}
         {% else %}
             <h4>Starting price: ${{ listing.start_price }}</h4>
@@ -80,7 +89,6 @@
         {% endif %}
     </div>
     {% endif %}
-
     <div>
         <h5>
             Comments

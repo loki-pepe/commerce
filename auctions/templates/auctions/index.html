@@ -28,10 +28,18 @@
                         Category: <a href="{% url 'categories' %}?c={{ listing.get_category_display }}">{{ listing.get_category_display }}</a>
                         {% for bid in listing.bids.all %}
                             {% if bid.highest_bid %}
-                                <h4>Current bid: ${{ bid.amount }}</h4>
+                                {% if listing.active_status %}
+                                    <h4>Current bid: ${{ bid.amount }}</h4>
+                                {% else %}
+                                    <h4>Sold for ${{ bid.amount }}</h4>
+                                {% endif %}
                             {% endif %}
                         {% empty %}
-                            <h4>Starting price: ${{ listing.start_price }}</h4>
+                            {% if listing.active_status %}
+                                <h4>Starting price: ${{ listing.start_price }}</h4>
+                            {% else %}
+                                <h4>Closed</h4>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </li>
