@@ -28,13 +28,13 @@
                     <a href="{% url 'new' %}">Create Listing</a>
                 </li>
                 <li>
-                    <a href="{% url 'watchlist' %}"><button>{{ request.watchlist_count }}</button>Watchlist</a>
+                    <a href="{% url 'watchlist' %}">Watchlist<button>{{ request.watchlist_count }}</button></a>
                 </li>
                 <li>
-                    <a href="{% url 'my_listings' %}"><button>{{ request.my_listings_count }}</button>My Listings</a>
+                    <a href="{% url 'my_listings' %}">My Listings<button>{{ request.my_listings_count }}</button></a>
                 </li>
                 <li>
-                    <a href="{% url 'bought_items' %}"><button>{{ request.bought_items_count }}</button>Bought Items</a>
+                    <a href="{% url 'bought_items' %}">Bought Items<button>{{ request.bought_items_count }}</button></a>
                 </li>
                 <li>
                     <a href="{% url 'logout' %}">Log Out</a>
