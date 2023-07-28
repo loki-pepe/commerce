@@ -1,7 +1,39 @@
-body {
-    padding: 10px;
+#header {
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
 img {
-    max-width: 200px;
+    max-width: 200px; /* Privremeno */
+}
+
+#main {
+    margin-top: 150px;
+}
+
+#navbar ul {
+    overflow: hidden;
+    background-color: #333;
+    width: 100%;
+}
+
+#navbar li {
+    float: left;
+}
+
+#navbar li a {
+    display: block;
+    color: #fff;
+    padding: 15px;
+}
+
+#top {
+    background-color: #fff;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }

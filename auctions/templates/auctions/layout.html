@@ -8,55 +8,64 @@
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     </head>
     <body>
-        <h1>Auctions</h1>
-        <div>
-            {% if user.is_authenticated %}
-                Signed in as <strong>{{ user.username }}</strong>.
-            {% else %}
-                Not signed in.
-            {% endif %}
-        </div>
-        <ul>
-            <li>
-                <a href="{% url 'index' %}">Active Listings</a>
-            </li>
-            <li>
-                <a href="{% url 'categories' %}">Categories</a>
-            </li>
-            {% if user.is_authenticated %}
-                <li>
-                    <a href="{% url 'new' %}">Create Listing</a>
-                </li>
-                <li>
-                    <a href="{% url 'watchlist' %}">Watchlist<button>{{ request.watchlist_count }}</button></a>
-                </li>
-                <li>
-                    <a href="{% url 'my_listings' %}">My Listings<button>{{ request.my_listings_count }}</button></a>
-                </li>
-                <li>
-                    <a href="{% url 'bought_items' %}">Bought Items<button>{{ request.bought_items_count }}</button></a>
-                </li>
-                <li>
-                    <a href="{% url 'logout' %}">Log Out</a>
-                </li>
-            {% else %}
-                <li>
-                    <a href="{% url 'login' %}">Log In</a>
-                </li>
-                <li>
-                    <a href="{% url 'register' %}">Register</a>
-                </li>
-            {% endif %}
-        </ul>
-        <hr>
-        {% if messages %}
-            {% for message in messages %}
-                <div>
-                    {{ message }}
+        <div id="header">
+            <div id="top">
+                <div id="title">
+                    <h1>Auctions</h1>
                 </div>
-            {% endfor %}
-        {% endif %}
-        {% block body %}
-        {% endblock %}
+                <div id="userinfo">
+                    {% if user.is_authenticated %}
+                        Signed in as <strong>{{ user.username }}</strong>.
+                    {% else %}
+                        Not signed in.
+                    {% endif %}
+                </div>
+            </div>
+            <div id="navbar">
+                <ul>
+                    <li>
+                        <a href="{% url 'index' %}">Active Listings</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'categories' %}">Categories</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'new' %}">Create Listing</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'watchlist' %}">Watchlist<button>{{ request.watchlist_count }}</button></a>
+                        </li>
+                        <li>
+                            <a href="{% url 'my_listings' %}">My Listings<button>{{ request.my_listings_count }}</button></a>
+                        </li>
+                        <li>
+                            <a href="{% url 'bought_items' %}">Bought Items<button>{{ request.bought_items_count }}</button></a>
+                        </li>
+                        <li>
+                            <a href="{% url 'logout' %}">Log Out</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'login' %}">Log In</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div id="main">
+            {% if messages %}
+                {% for message in messages %}
+                    <div>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% block body %}
+            {% endblock %}
+        </div>
     </body>
 </html>
