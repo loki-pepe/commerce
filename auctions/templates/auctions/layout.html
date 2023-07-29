@@ -6,6 +6,7 @@
         <title>{% block title %}Auctions{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <div id="header">
@@ -24,33 +25,65 @@
             <div id="navbar">
                 <ul>
                     <li>
-                        <a href="{% url 'index' %}">Active Listings</a>
+                        {% if request.path == "/" %}
+                            <a class="active" href="{% url 'index' %}">Active Listings</a>
+                        {% else %}
+                            <a href="{% url 'index' %}">Active Listings</a>
+                        {% endif %}
                     </li>
                     <li>
-                        <a href="{% url 'categories' %}">Categories</a>
+                        {% if request.path == "/categories" %}
+                            <a class="active" href="{% url 'categories' %}">Categories</a>
+                        {% else %}
+                            <a href="{% url 'categories' %}">Categories</a>
+                        {% endif %}
                     </li>
                     {% if user.is_authenticated %}
                         <li>
-                            <a href="{% url 'new' %}">Create Listing</a>
+                            {% if request.path == "/new" %}
+                                <a class="active" href="{% url 'new' %}">Create Listing</a>
+                            {% else %}
+                                <a href="{% url 'new' %}">Create Listing</a>
+                            {% endif %}
                         </li>
                         <li>
-                            <a href="{% url 'watchlist' %}">Watchlist<button>{{ request.watchlist_count }}</button></a>
+                            {% if request.path == "/watchlist" %}
+                                <a class="active" href="{% url 'watchlist' %}">Watchlist<button>{{ request.watchlist_count }}</button></a>
+                            {% else %}
+                                <a href="{% url 'watchlist' %}">Watchlist<button>{{ request.watchlist_count }}</button></a>
+                                {% endif %}
                         </li>
                         <li>
-                            <a href="{% url 'my_listings' %}">My Listings<button>{{ request.my_listings_count }}</button></a>
+                            {% if request.path == "/my_listings" %}
+                                <a class="active" href="{% url 'my_listings' %}">My Listings<button>{{ request.my_listings_count }}</button></a>
+                            {% else %}
+                                <a href="{% url 'my_listings' %}">My Listings<button>{{ request.my_listings_count }}</button></a>
+                            {% endif %}
                         </li>
                         <li>
-                            <a href="{% url 'bought_items' %}">Bought Items<button>{{ request.bought_items_count }}</button></a>
+                            {% if request.path == "/bought_items" %}
+                                <a class="active" href="{% url 'bought_items' %}">Bought Items<button>{{ request.bought_items_count }}</button></a>
+                            {% else %}
+                                <a href="{% url 'bought_items' %}">Bought Items<button>{{ request.bought_items_count }}</button></a>
+                            {% endif %}
                         </li>
                         <li>
                             <a href="{% url 'logout' %}">Log Out</a>
                         </li>
                     {% else %}
                         <li>
-                            <a href="{% url 'login' %}">Log In</a>
+                            {% if request.path == "/login" %}
+                                <a class="active" href="{% url 'login' %}">Log In</a>
+                            {% else %}
+                                <a href="{% url 'login' %}">Log In</a>
+                            {% endif %}
                         </li>
                         <li>
-                            <a href="{% url 'register' %}">Register</a>
+                            {% if request.path == "/register" %}
+                                <a class="active" href="{% url 'register' %}">Register</a>
+                            {% else %}
+                                <a href="{% url 'register' %}">Register</a>
+                            {% endif %}
                         </li>
                     {% endif %}
                 </ul>
