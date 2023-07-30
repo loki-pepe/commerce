@@ -95,6 +95,9 @@
                 </div>
             {% endif %}
         </div>
+        {% if title %}
+        <div id="topspace"></div>
+        {% endif %}
         <div id="main">
             {% if messages %}
                 {% for message in messages %}

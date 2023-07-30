@@ -18,7 +18,7 @@ img {
 }
 
 #main {
-    margin-top: 200px;
+    margin-top: 130px;
 }
 
 #navbar {
@@ -68,6 +68,10 @@ img {
 
 #top {
     background-color: #fff;
+}
+
+#topspace {
+    height: 70px;
 }
 
 ul {

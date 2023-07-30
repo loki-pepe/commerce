@@ -116,7 +116,7 @@
             <form action="{% url 'listing' listing.id %}" method="post">
                 {% csrf_token %}
                 <div>
-                    <textarea autofocus="off" name="cmnt" placeholder="Comment"></textarea>
+                    <textarea name="cmnt" placeholder="Comment"></textarea>
                 </div>
                 <div>
                     <button type="submit">Post</button>
