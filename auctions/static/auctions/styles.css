@@ -30,7 +30,6 @@ img {
     font-size: 12px;
     font-weight: bold;
     border-radius: 20px;
-    margin-bottom: -1.4px;
     margin-left: 2px;
 }
 
@@ -42,6 +41,7 @@ img {
 
 #navbar li {
     float: left;
+    height: 54px;
 }
 
 #navbar li a {
