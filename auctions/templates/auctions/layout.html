@@ -88,6 +88,12 @@
                     {% endif %}
                 </ul>
             </div>
+            {% if title %}
+                <div id="pagename">
+                    <h2>{{ title }}</h2>
+                    <hr>
+                </div>
+            {% endif %}
         </div>
         <div id="main">
             {% if messages %}

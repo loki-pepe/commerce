@@ -1,12 +1,6 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    {% if category %}
-        <h2>{{ category }}</h2>
-    {% else %}
-        <h2>Active Listings</h2>
-    {% endif %}
-
     <ul>
         {% if listings %}
             {% for listing in listings %}

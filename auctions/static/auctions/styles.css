@@ -8,12 +8,17 @@ body {
     width: 100%;
 }
 
+hr {
+    margin-left: -10px;
+    margin-top: -2px;
+}
+
 img {
     max-width: 200px; /* Privremeno */
 }
 
 #main {
-    margin-top: 150px;
+    margin-top: 200px;
 }
 
 #navbar {
@@ -54,6 +59,11 @@ img {
 #navbar li a:hover:not(.active) {
     background-color: #111;
     text-decoration: none;
+}
+
+#pagename {
+    background-color: #fff;
+    padding-top: 10px;
 }
 
 #top {

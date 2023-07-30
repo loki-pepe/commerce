@@ -13,6 +13,7 @@ from .forms import ListingForm
 
 def index(request):
     return render(request, "auctions/index.html", {
+        "title": "Active Listings",
         "listings": Listing.objects.filter(active_status=True)
     })
 
@@ -25,6 +26,7 @@ def categories(request):
         return HttpResponseRedirect(reverse("categories"))
     except AttributeError:
         return render(request, "auctions/categories.html", {
+            "title": "Categories",
             "categories": [c[1] for c in Listing.category.field.choices]
         })
 
@@ -34,7 +36,7 @@ def categories(request):
         listings = Listing.objects.filter(category=[c[0] for c in Listing.category.field.choices][index], active_status=True)
 
     return render(request, "auctions/index.html", {
-        "category": [c[1] for c in Listing.category.field.choices][index],
+        "title": [c[1] for c in Listing.category.field.choices][index],
         "listings": listings
     })
 
@@ -130,10 +132,13 @@ def login_view(request):
             return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "auctions/login.html", {
+                "title": "Login",
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "auctions/login.html")
+        return render(request, "auctions/login.html", {
+            "title": "Login"
+        })
 
 
 def logout_view(request):
@@ -156,6 +161,7 @@ def new_listing(request):
             messages.error(request, "Something went wrong. Did you omit a required field?")
             return HttpResponseRedirect(reverse("new"))
     return render(request, "auctions/create.html", {
+        "title": "Create Listing",
         "form": ListingForm()
     })
 
@@ -170,6 +176,7 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "auctions/register.html", {
+                "title": "Register",
                 "message": "Passwords must match."
             })
 
@@ -179,31 +186,34 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
+                "title": "Register",
                 "message": "Username already taken."
             })
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "auctions/register.html")
+        return render(request, "auctions/register.html", {
+            "title": "Register"
+        })
 
 
 @login_required
 def watchlist(request):
     return render(request, "auctions/index.html", {
-        "category": "Watchlist",
+        "title": "Watchlist",
         "listings": request.user.watchlist.all()
     })
 
 @login_required
 def my_listings(request):
     return render(request, "auctions/index.html", {
-        "category": "My Listings",
+        "title": "My Listings",
         "listings": Listing.objects.filter(seller=request.user),
     })
 
 @login_required
 def bought_items(request):
     return render(request, "auctions/index.html", {
-        "category": "Bought Items",
+        "title": "Bought Items",
         "listings": Listing.objects.filter(buyer=request.user)
     })
