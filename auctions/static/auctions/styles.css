@@ -2,6 +2,20 @@ body {
     padding: 10px;
 }
 
+.card {
+    width: 200px;
+    height: 400px;
+    margin: 10px;
+}
+
+.card .description {
+    height: 50px;
+}
+
+.card .image {
+    text-align: center;
+}
+
 #header {
     position: fixed;
     top: 0;
@@ -15,6 +29,7 @@ hr {
 
 img {
     max-width: 200px; /* Privremeno */
+    max-height: 200px;
 }
 
 #main {
@@ -66,6 +81,10 @@ img {
     padding-top: 10px;
 }
 
+.phone {
+    display: none;
+}
+
 #top {
     background-color: #fff;
 }
@@ -78,4 +97,23 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+
+
+
+
+@media screen and (max-width:860px) {
+
+    .desktop {
+        display: none;
+    }
+
+    .phone {
+        display: unset;
+    }
+}
+
+@media screen and (max-width:480px) {
+
 }

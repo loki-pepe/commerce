@@ -38,47 +38,50 @@
                             <a href="{% url 'categories' %}">Categories</a>
                         {% endif %}
                     </li>
+                    <li class="phone">
+                        <a>User</a>
+                    </li>
                     {% if user.is_authenticated %}
-                        <li>
+                        <li class="desktop">
                             {% if request.path == "/new" %}
                                 <a class="active" href="{% url 'new' %}">Create Listing</a>
                             {% else %}
                                 <a href="{% url 'new' %}">Create Listing</a>
                             {% endif %}
                         </li>
-                        <li>
+                        <li class="desktop">
                             {% if request.path == "/watchlist" %}
                                 <a class="active" href="{% url 'watchlist' %}">Watchlist<button>{{ request.watchlist_count }}</button></a>
                             {% else %}
                                 <a href="{% url 'watchlist' %}">Watchlist<button>{{ request.watchlist_count }}</button></a>
                                 {% endif %}
                         </li>
-                        <li>
+                        <li class="desktop">
                             {% if request.path == "/my_listings" %}
                                 <a class="active" href="{% url 'my_listings' %}">My Listings<button>{{ request.my_listings_count }}</button></a>
                             {% else %}
                                 <a href="{% url 'my_listings' %}">My Listings<button>{{ request.my_listings_count }}</button></a>
                             {% endif %}
                         </li>
-                        <li>
+                        <li class="desktop">
                             {% if request.path == "/bought_items" %}
                                 <a class="active" href="{% url 'bought_items' %}">Bought Items<button>{{ request.bought_items_count }}</button></a>
                             {% else %}
                                 <a href="{% url 'bought_items' %}">Bought Items<button>{{ request.bought_items_count }}</button></a>
                             {% endif %}
                         </li>
-                        <li>
+                        <li class="desktop">
                             <a href="{% url 'logout' %}">Log Out</a>
                         </li>
                     {% else %}
-                        <li>
+                        <li class="desktop">
                             {% if request.path == "/login" %}
                                 <a class="active" href="{% url 'login' %}">Log In</a>
                             {% else %}
                                 <a href="{% url 'login' %}">Log In</a>
                             {% endif %}
                         </li>
-                        <li>
+                        <li class="desktop">
                             {% if request.path == "/register" %}
                                 <a class="active" href="{% url 'register' %}">Register</a>
                             {% else %}

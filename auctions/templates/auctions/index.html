@@ -4,18 +4,18 @@
     <ul>
         {% if listings %}
             {% for listing in listings %}
-                <li>
+                <li class="card">
                     <div>
                         <h3><a href="{% url 'listing' listing.id %}">{{ listing.title }}</a></h3>
                     </div>
-                    <div>
+                    <div class="image">
                         {% if listing.image %}
                             <img src="{{ listing.image }}">
                         {% else %}
                             <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
                         {% endif %}
                     </div>
-                    <div>
+                    <div class="description">
                         {{ listing.description }}
                     </div>
                     <div>
