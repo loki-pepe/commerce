@@ -4,39 +4,53 @@
     <ul>
         {% if listings %}
             {% for listing in listings %}
-                <li class="card">
-                    <div>
-                        <h3><a href="{% url 'listing' listing.id %}">{{ listing.title }}</a></h3>
-                    </div>
-                    <div class="image">
-                        {% if listing.image %}
-                            <img src="{{ listing.image }}">
-                        {% else %}
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
-                        {% endif %}
-                    </div>
-                    <div class="description">
-                        {{ listing.description }}
-                    </div>
-                    <div>
-                        Category: <a href="{% url 'categories' %}?c={{ listing.get_category_display }}">{{ listing.get_category_display }}</a>
-                    </div>
-                    <div>
-                        {% for bid in listing.bids.all %}
-                            {% if bid.highest_bid %}
-                                {% if listing.active_status %}
-                                    Current bid: ${{ bid.amount }}
+                <li>
+                    <div class="listing-card">
+                        <div class="title">
+                            <h3><a href="{% url 'listing' listing.id %}">{{ listing.title }}</a></h3>
+                        </div>
+                        <div class="image">
+                            <a href="{% url 'listing' listing.id %}">
+                                {% if listing.image %}
+                                    <img src="{{ listing.image }}">
                                 {% else %}
-                                    Sold for ${{ bid.amount }}
+                                    <img class="no-image" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
                                 {% endif %}
-                            {% endif %}
-                        {% empty %}
-                            {% if listing.active_status %}
-                                Starting price: ${{ listing.start_price }}
-                            {% else %}
-                                Closed
-                            {% endif %}
-                        {% endfor %}
+                            </a>
+                        </div>
+                        <div class="text">
+                            <div class="price-status">
+                                {% for bid in listing.bids.all %}
+                                    {% if bid.highest_bid %}
+                                        {% if listing.active_status %}
+                                            Current bid:
+                                        {% else %}
+                                            Sold for
+                                        {% endif %}
+                                        <div class="price">
+                                            ${{ bid.amount }}
+                                        </div>
+                                    {% endif %}
+                                {% empty %}
+                                    {% if listing.active_status %}
+                                        Starting price:
+                                        <div class="price">
+                                            ${{ listing.start_price }}
+                                        </div>
+                                    {% else %}
+                                        <div class="price">
+                                            Closed
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="category">
+                                Category: <a href="{% url 'categories' %}?c={{ listing.get_category_display }}">{{ listing.get_category_display }}</a>
+                            </div>
+                            <div class="description">
+                                {{ listing.description }}
+                            </div>
+                        </div>
                     </div>
                 </li>
             {% endfor %}

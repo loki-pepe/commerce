@@ -2,20 +2,6 @@ body {
     padding: 10px;
 }
 
-.card {
-    width: 200px;
-    height: 400px;
-    margin: 10px;
-}
-
-.card .description {
-    height: 50px;
-}
-
-.card .image {
-    text-align: center;
-}
-
 #header {
     position: fixed;
     top: 0;
@@ -28,8 +14,55 @@ hr {
 }
 
 img {
-    max-width: 200px; /* Privremeno */
-    max-height: 200px;
+}
+
+.listing-card {
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+    padding: 10px 20px;
+    
+    border-radius: 10px;
+}
+
+.listing-card .description {
+    height: 150px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.listing-card .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    text-align: center;
+    height: 250px;
+    width: 250px;
+    border-radius: 10px;
+    background-color: #e6e6e6;
+}
+
+.listing-card img {
+    max-width: 250px;
+    max-height: 250px;
+}
+
+.listing-card .price {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.listing-card .text {
+    float: left;
+    margin-left: 12px;
+    padding: 5px 0;
+    max-width: calc(100% - 265px);
+    max-height: 250px;
+}
+
+.listing-card a {
+    color: #212925;
 }
 
 #main {
@@ -69,11 +102,16 @@ img {
     background-color: #ead411;
     color: #111;
     text-decoration: none;
+    font-weight: 500;
 }
 
 #navbar li a:hover:not(.active) {
     background-color: #111;
     text-decoration: none;
+}
+
+.no-image {
+    border-radius: 10px;
 }
 
 #pagename {
@@ -112,8 +150,4 @@ ul {
     .phone {
         display: unset;
     }
-}
-
-@media screen and (max-width:480px) {
-
 }
