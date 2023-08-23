@@ -45,7 +45,10 @@
                                 {% endfor %}
                             </div>
                             <div class="category">
-                                Category: <a href="{% url 'categories' %}?c={{ listing.get_category_display }}">{{ listing.get_category_display }}</a>
+                                Category:
+                                <div>
+                                    <a href="{% url 'categories' %}?c={{ listing.get_category_display }}">{{ listing.get_category_display }}</a>
+                                </div>
                             </div>
                             <div class="description">
                                 {{ listing.description }}

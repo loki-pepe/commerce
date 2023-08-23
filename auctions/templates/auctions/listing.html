@@ -89,39 +89,41 @@
         {% endif %}
     </div>
     {% endif %}
-    <hr>
-    <div>
-        <h3>
-            Comments
-        </h3>
+    <div id="comments">
+        <hr>
+        <div>
+            <h3>
+                Comments
+            </h3>
+        </div>
+        {% if comments %}
+            <div>
+                {% for comment in comments %}
+                    <div>
+                        <strong>{{ comment.commenter }}</strong>
+                    </div>
+                    <div>
+                        {{ comment.text }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div>
+                No comments.
+            </div>
+        {% endif %}
+        {% if user.is_authenticated and listing.active_status %}
+            <div>
+                <form action="{% url 'listing' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <div>
+                        <textarea name="cmnt" placeholder="Comment"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit">Post</button>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
     </div>
-    {% if comments %}
-        <div>
-            {% for comment in comments %}
-                <div>
-                    <strong>{{ comment.commenter }}</strong>
-                </div>
-                <div>
-                    {{ comment.text }}
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div>
-            No comments.
-        </div>
-    {% endif %}
-    {% if user.is_authenticated and listing.active_status %}
-        <div>
-            <form action="{% url 'listing' listing.id %}" method="post">
-                {% csrf_token %}
-                <div>
-                    <textarea name="cmnt" placeholder="Comment"></textarea>
-                </div>
-                <div>
-                    <button type="submit">Post</button>
-                </div>
-            </form>
-        </div>
-    {% endif %}
 {% endblock %}
