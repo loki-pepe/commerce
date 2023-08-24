@@ -31,14 +31,20 @@ body {
 }
 
 hr {
-    margin: -2px 0 15px -10px;
+    margin: -2px -10px 15px;
 }
 
-input {
-    border: solid 1px;
+input, input:focus {
+    border: solid 1px #333;
     border-radius: 10px;
     padding: 0 10px;
     width: 150px;
+    outline: none;
+}
+
+input:focus, textarea:focus {
+    outline: solid 2px #ddd;
+    outline-offset: -3px;
 }
 
 .listing-card {
@@ -196,11 +202,12 @@ input {
     display: none;
 }
 
-textarea {
+textarea, textarea:focus {
+    border: solid 1px #333;
     border-radius: 10px;
     padding: 2px 10px;
-    height: 100px;
-    width: 350px;
+    height: 120px;
+    width: 300px;
     resize: none;
 }
 
