@@ -51,23 +51,23 @@
                         </li>
                         <li class="desktop">
                             {% if request.path == "/watchlist" %}
-                                <a class="active" href="{% url 'watchlist' %}">Watchlist<button>{{ request.watchlist_count }}</button></a>
+                                <a class="active" href="{% url 'watchlist' %}">Watchlist<button class="navbtn">{{ request.watchlist_count }}</button></a>
                             {% else %}
-                                <a href="{% url 'watchlist' %}">Watchlist<button>{{ request.watchlist_count }}</button></a>
+                                <a href="{% url 'watchlist' %}">Watchlist<button class="navbtn">{{ request.watchlist_count }}</button></a>
                                 {% endif %}
                         </li>
                         <li class="desktop">
                             {% if request.path == "/my_listings" %}
-                                <a class="active" href="{% url 'my_listings' %}">My Listings<button>{{ request.my_listings_count }}</button></a>
+                                <a class="active" href="{% url 'my_listings' %}">My Listings<button class="navbtn">{{ request.my_listings_count }}</button></a>
                             {% else %}
-                                <a href="{% url 'my_listings' %}">My Listings<button>{{ request.my_listings_count }}</button></a>
+                                <a href="{% url 'my_listings' %}">My Listings<button class="navbtn">{{ request.my_listings_count }}</button></a>
                             {% endif %}
                         </li>
                         <li class="desktop">
                             {% if request.path == "/bought_items" %}
-                                <a class="active" href="{% url 'bought_items' %}">Bought Items<button>{{ request.bought_items_count }}</button></a>
+                                <a class="active" href="{% url 'bought_items' %}">Bought Items<button class="navbtn">{{ request.bought_items_count }}</button></a>
                             {% else %}
-                                <a href="{% url 'bought_items' %}">Bought Items<button>{{ request.bought_items_count }}</button></a>
+                                <a href="{% url 'bought_items' %}">Bought Items<button class="navbtn">{{ request.bought_items_count }}</button></a>
                             {% endif %}
                         </li>
                         <li class="desktop">

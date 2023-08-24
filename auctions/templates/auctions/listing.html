@@ -1,21 +1,18 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <div>
-        {{ listing.time }}
-    </div>
     {% if not listing.active_status %}
-        <div>
+        <div id="listing-inactive">
             This listing is no longer active.
         </div>
     {% endif %}
     {% if user.is_authenticated %}
         {% if user == listing.buyer %}
-            <div>
+            <div id="user-bought">
                 You have won the auction.
             </div>
         {% endif %}
-        <div>
+        <div id="listing-watchlist">
             <form action="{% url 'listing' listing.id %}" method="post">
                 {% csrf_token %}
                 {% if watchlist %}
@@ -26,29 +23,37 @@
             </form>
         </div>
     {% endif %}
-    <div>
+    <div id="listing-title">
         <h3>{{ listing.title }}</h3>
     </div>
-    <div>
-        Category: <a href="{% url 'categories' %}?c={{ listing.get_category_display }}">{{ listing.get_category_display }}</a>
-    </div>
-    <div>
+    <div class="listing-image">
         {% if listing.image %}
             <img src="{{ listing.image }}">
         {% else %}
             <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
         {% endif %}
     </div>
-    <div>
-        {{ listing.description}}
+    <div id="listing-category">
+        Category: <a href="{% url 'categories' %}?c={{ listing.get_category_display }}">{{ listing.get_category_display }}</a>
     </div>
-    <div>
+    <div id="listing-description">
+        <div id="desc-title">
+            Description
+        </div>
+        <div id="text">
+            {{ listing.description}}
+        </div>
+    </div>
+    <div id="listing-timestamp">
+        Created {{ listing.time }}
+    </div>
+    <div id="listing-price">
         {% if bid %}
             {% if listing.active_status %}
-                Current bid: ${{ bid.amount }}
+                Current bid: <span>${{ bid.amount }}</span>
             {% else %}
                 <div>
-                    Winning bid: ${{ bid.amount }}
+                    Winning bid: <span>${{ bid.amount }}</span>
                 </div>
                 <div>
                     {% if listing.buyer == user %}
@@ -59,23 +64,16 @@
                 </div>
             {% endif %}
         {% else %}
-            Starting price: ${{ listing.start_price }}
+            Starting price: <span>${{ listing.start_price }}</span>
         {% endif %}
     </div>
     {% if user.is_authenticated and listing.active_status %}
     <div>
         {% if not user == listing.seller %}
             <div>
-                Make a bid:
-            </div>
-            <div>
                 <form action="{% url 'listing' listing.id %}" method="post">
                     {% csrf_token %}
-                    {% if bid %}
-                        <input type="number" min="{{ bid.amount }}" step="0.01" name="bd">
-                    {% else %}
-                        <input type="number" min="{{ listing.start_price }}" step="0.01" name="bd">
-                    {% endif %}
+                    <input placeholder="Make a bid..." name="bd">
                     <button type="submit">Bid</button>
                 </form>
             </div>
@@ -91,21 +89,26 @@
     {% endif %}
     <div id="comments">
         <hr>
-        <div>
-            <h3>
+        <div id="comm-title">
+            <h5>
                 Comments
-            </h3>
+            </h5>
         </div>
         {% if comments %}
             <div>
+                <ul>
                 {% for comment in comments %}
-                    <div>
-                        <strong>{{ comment.commenter }}</strong>
-                    </div>
-                    <div>
-                        {{ comment.text }}
-                    </div>
+                    <li class="comment">
+                        <hr>
+                        <div>
+                            <strong>{{ comment.commenter }}</strong>
+                        </div>
+                        <div>
+                            {{ comment.text }}
+                        </div> 
+                    </li>
                 {% endfor %}
+                </ul>
             </div>
         {% else %}
             <div>
@@ -113,11 +116,12 @@
             </div>
         {% endif %}
         {% if user.is_authenticated and listing.active_status %}
-            <div>
+            <div id="new-comm">
+                <hr>
                 <form action="{% url 'listing' listing.id %}" method="post">
                     {% csrf_token %}
                     <div>
-                        <textarea name="cmnt" placeholder="Comment"></textarea>
+                        <textarea name="cmnt" placeholder="Comment..."></textarea>
                     </div>
                     <div>
                         <button type="submit">Post</button>

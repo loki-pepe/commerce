@@ -1,5 +1,27 @@
+a, a:hover {
+    color: #212925;
+}
+
 body {
     padding: 10px;
+}
+
+.comment {
+    margin-bottom: 8px;
+    width: 300px;
+}
+
+.comment hr {
+    margin: 10px 0 0;
+}
+
+#comments {
+    margin-top: 20px;
+}
+
+#desc-title {
+    font-size: 18px;
+    font-weight: 500;
 }
 
 #header {
@@ -9,8 +31,14 @@ body {
 }
 
 hr {
-    margin-left: -10px;
-    margin-top: -2px;
+    margin: -2px 0 15px -10px;
+}
+
+input {
+    border: solid 1px;
+    border-radius: 10px;
+    padding: 0 10px;
+    width: 150px;
 }
 
 .listing-card {
@@ -56,24 +84,63 @@ hr {
     max-height: 250px;
 }
 
-.listing-card a {
-    color: #212925;
+#listing-description {
+    margin: 5px 0;
+}
+
+.listing-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 350px;
+    width: 350px;
+    border-radius: 10px;
+    background-color: #e6e6e6;
+}
+
+.listing-image img {
+    max-width: 350px;
+    max-height: 350px;
+}
+
+#listing-price {
+    margin: 5px 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+#listing-price span {
+    font-size: 24px;
+}
+
+#listing-timestamp {
+    color: #888;
+}
+
+#listing-watchlist {
+    padding: 10px 0 5px;
 }
 
 #main {
     margin-top: 130px;
 }
 
+#main button {
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    border-style: none;
+    padding: 2px 7px;
+}
+
+#main button:hover {
+    background-color: #111;
+}
+
 #navbar {
     margin-left: -10px;
     text-align: center;
-}
-
-#navbar button {
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 20px;
-    margin-left: 2px;
 }
 
 #navbar ul {
@@ -94,7 +161,7 @@ hr {
 }
 
 #navbar li a.active {
-    background-color: #ead411;
+    background-color: #bbb;
     color: #111;
     text-decoration: none;
     font-weight: 500;
@@ -103,6 +170,17 @@ hr {
 #navbar li a:hover:not(.active) {
     background-color: #111;
     text-decoration: none;
+}
+
+.navbtn {
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 20px;
+    margin-left: 2px;
+}
+
+#new-comm {
+    margin-top: 16px;
 }
 
 .no-image {
@@ -116,6 +194,14 @@ hr {
 
 .phone {
     display: none;
+}
+
+textarea {
+    border-radius: 10px;
+    padding: 2px 10px;
+    height: 100px;
+    width: 350px;
+    resize: none;
 }
 
 #top {
