@@ -2,9 +2,16 @@
 
 {% block body %}
     <div>
-        <form action="{% url 'new' %}" method="post">
+        <form class="user-form" action="{% url 'new' %}" method="post">
             {% csrf_token %}
-            {{ form.as_div }}
+            {% for field in form %}
+                    <div>
+                        {{ field.label_tag }}
+                    </div>
+                    <div>
+                        {{ field }}
+                    </div>
+            {% endfor %}
             <button type="submit">Submit</button>
         </form>
     </div>
