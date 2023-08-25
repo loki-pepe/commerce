@@ -110,6 +110,11 @@ input:focus, textarea:focus {
     max-height: 350px;
 }
 
+#listing-inactive {
+    font-size: 18px;
+    font-weight: 500;
+}
+
 #listing-price {
     margin: 5px 0;
     font-size: 18px;
@@ -142,6 +147,12 @@ input:focus, textarea:focus {
 
 #main button:hover {
     background-color: #111;
+}
+
+.msg {
+    font-size: 18px;
+    font-weight: 500;
+    color: #a20000;
 }
 
 #navbar {

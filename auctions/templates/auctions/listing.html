@@ -3,15 +3,10 @@
 {% block body %}
     {% if not listing.active_status %}
         <div id="listing-inactive">
-            This listing is no longer active.
+            This listing is no longer active {% if user == listing.buyer %}(you have won the auction){% endif %}.
         </div>
     {% endif %}
     {% if user.is_authenticated %}
-        {% if user == listing.buyer %}
-            <div id="user-bought">
-                You have won the auction.
-            </div>
-        {% endif %}
         <div id="listing-watchlist">
             <form action="{% url 'listing' listing.id %}" method="post">
                 {% csrf_token %}
@@ -45,12 +40,14 @@
         </div>
     </div>
     <div id="listing-timestamp">
-        Created {{ listing.time }}
+        Created {{ listing.time }} by {% if listing.seller == user %} <strong>you</strong> {% else %} <strong>{{ listing.seller }}</strong> {% endif %}
     </div>
     <div id="listing-price">
         {% if bid %}
             {% if listing.active_status %}
-                Current bid: <span>${{ bid.amount }}</span>
+                <div>
+                    Current bid: <span>${{ bid.amount }}</span> {% if bid.buyer == user %} (by <strong>you</strong>) {% endif %}
+                </div>
             {% else %}
                 <div>
                     Winning bid: <span>${{ bid.amount }}</span>

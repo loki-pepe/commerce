@@ -73,7 +73,7 @@ def listing_view(request, listing_id):
                         new_bid.save()
                         messages.success(request, "Bid successful.")
                     else:
-                        messages.error(request, "Your bid must be greater than the previous bid.")
+                        messages.error(request, "Your bid must be greater than the current bid.")
                 else:
                     if amount >= price:
                         new_bid = Bid(buyer=request.user, listing=listing, amount=amount)

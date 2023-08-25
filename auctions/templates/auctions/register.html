@@ -3,7 +3,7 @@
 {% block body %}
 
     {% if message %}
-        <div>{{ message }}</div>
+        <div class="msg">{{ message }}</div>
     {% endif %}
 
     <form action="{% url 'register' %}" method="post">
