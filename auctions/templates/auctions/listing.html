@@ -112,7 +112,7 @@
                 No comments.
             </div>
         {% endif %}
-        {% if user.is_authenticated and listing.active_status %}
+        {% if user.is_authenticated %}
             <div id="new-comm">
                 <hr>
                 <form action="{% url 'listing' listing.id %}" method="post">
@@ -124,6 +124,11 @@
                         <button type="submit">Post</button>
                     </div>
                 </form>
+            </div>
+        {% else %}
+            <hr>
+            <div>
+                Would you like to leave to leave a comment? You can <a href="{% url 'login' %}">login</a>/<a href="{% url 'register' %}">register</a> here.
             </div>
         {% endif %}
     </div>

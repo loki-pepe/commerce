@@ -6,12 +6,12 @@
         <div class="msg">{{ message }}</div>
     {% endif %}
 
-    <form action="{% url 'login' %}" method="post">
+    <form class="user_form" action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <div>
             <input autofocus type="text" name="username" placeholder="Username">
         </div>
-        <div class>
+        <div>
             <input type="password" name="password" placeholder="Password">
         </div>
         <button type="submit" value="Login">Login</button>

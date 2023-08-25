@@ -177,6 +177,10 @@ input:focus, textarea:focus {
     padding: 15px;
 }
 
+.phone {
+    clear: left
+}
+
 #navbar li a.active {
     background-color: #bbb;
     color: #111;
@@ -227,7 +231,7 @@ textarea, textarea:focus {
 }
 
 #topspace {
-    height: 70px;
+    height: 60px;
 }
 
 ul {
@@ -236,17 +240,21 @@ ul {
     padding: 0;
 }
 
+.user_form div {
+    margin: 5px 0;
+}
+
+.user_form div input {
+    width: 250px;
+}
+
 
 
 
 
 @media screen and (max-width:860px) {
-    .desktop {
-        display: none;
-    }
-
-    .phone {
-        display: unset;
+    #topspace {
+        height: 114px;
     }
 }
 
@@ -262,5 +270,15 @@ ul {
     .listing-card .text {
         max-width: 100%;
         margin-left: 0;
+    }
+}
+
+@media screen and (max-width:372px) {
+    .listing-card {
+        padding: 0;
+    }
+
+    #topspace {
+        height: 168px;
     }
 }
