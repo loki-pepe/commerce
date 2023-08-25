@@ -62,6 +62,7 @@ label {
     height: 7.5rem;
     margin-top: 10px;
     overflow: hidden;
+    width: 80%;
 }
 
 .listing-card .image {
@@ -96,6 +97,8 @@ label {
 
 #listing-description {
     margin: 5px 0;
+    width: 70%;
+    min-width: 350px;
 }
 
 .listing-image {
