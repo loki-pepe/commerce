@@ -259,9 +259,9 @@ ul {
 
 
 
-@media screen and (max-width:860px) {
-    #topspace {
-        height: 114px;
+@media screen and (max-width:695px) {
+    #main {
+        margin-top: 184px;
     }
 }
 
@@ -280,12 +280,12 @@ ul {
     }
 }
 
-@media screen and (max-width:372px) {
+@media screen and (max-width:356px) {
     .listing-card {
         padding: 0;
     }
 
-    #topspace {
-        height: 168px;
+    #main {
+        margin-top: 238px;
     }
 }
