@@ -136,6 +136,8 @@ def login_view(request):
                 "message": "Invalid username and/or password."
             })
     else:
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("index"))
         return render(request, "auctions/login.html", {
             "title": "Login"
         })
@@ -192,6 +194,8 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("index"))
         return render(request, "auctions/register.html", {
             "title": "Register"
         })
