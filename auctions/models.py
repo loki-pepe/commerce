@@ -17,7 +17,6 @@ class Listing(models.Model):
     title = models.CharField(blank=False, null=False, max_length=64)
     description = models.CharField(max_length=500)
     start_price = models.DecimalField(blank=False, null=False, max_digits=12, decimal_places=2, validators=[MinValueValidator(limit_value=0)])
-    # current_bid = models.OneToOneField("Bid", on_delete=models.PROTECT, null=True, related_name="_listing")
     category = models.CharField(
         max_length=2,
         choices=CATEGORY_CHOICES,

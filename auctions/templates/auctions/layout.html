@@ -60,13 +60,6 @@
                                 <a href="{% url 'my_listings' %}">My Listings<button class="navbtn">{{ request.my_listings_count }}</button></a>
                             {% endif %}
                         </li>
-                        <!--<li>
-                            {% if request.path == "/bought_items" %}
-                                <a class="active" href="{% url 'bought_items' %}">Bought Items<button class="navbtn">{{ request.bought_items_count }}</button></a>
-                            {% else %}
-                                <a href="{% url 'bought_items' %}">Bought Items<button class="navbtn">{{ request.bought_items_count }}</button></a>
-                            {% endif %}
-                        </li>-->
                         <li>
                             <a href="{% url 'logout' %}">Log Out</a>
                         </li>
