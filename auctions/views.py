@@ -12,33 +12,50 @@ from .forms import ListingForm
 
 
 def index(request):
-    return render(request, "auctions/index.html", {
-        "title": "Active Listings",
-        "listings": Listing.objects.filter(active_status=True)
-    })
+    return render(
+        request,
+        "auctions/index.html",
+        {
+            "title": "Active Listings",
+            "listings": Listing.objects.filter(active_status=True),
+        },
+    )
 
 
 def categories(request):
-    ctgr = request.GET.get("c", None)  
+    ctgr = request.GET.get("c", None)
     try:
-        index = list(map(str.lower, [c[1].lower() for c in Listing.category.field.choices])).index(ctgr.lower())
+        index = list(
+            map(str.lower, [c[1].lower() for c in Listing.category.field.choices])
+        ).index(ctgr.lower())
     except ValueError:
         return HttpResponseRedirect(reverse("categories"))
     except AttributeError:
-        return render(request, "auctions/categories.html", {
-            "title": "Categories",
-            "categories": [c[1] for c in Listing.category.field.choices]
-        })
+        return render(
+            request,
+            "auctions/categories.html",
+            {
+                "title": "Categories",
+                "categories": [c[1] for c in Listing.category.field.choices],
+            },
+        )
 
     if index == 0:
         listings = Listing.objects.filter(active_status=True)
     else:
-        listings = Listing.objects.filter(category=[c[0] for c in Listing.category.field.choices][index], active_status=True)
+        listings = Listing.objects.filter(
+            category=[c[0] for c in Listing.category.field.choices][index],
+            active_status=True,
+        )
 
-    return render(request, "auctions/index.html", {
-        "title": [c[1] for c in Listing.category.field.choices][index],
-        "listings": listings
-    })
+    return render(
+        request,
+        "auctions/index.html",
+        {
+            "title": [c[1] for c in Listing.category.field.choices][index],
+            "listings": listings,
+        },
+    )
 
 
 def listing_view(request, listing_id):
@@ -49,9 +66,13 @@ def listing_view(request, listing_id):
                 request.user.watchlist.add(listing)
             elif request.POST.get("w_list") == "remove":
                 request.user.watchlist.remove(listing)
-            return HttpResponseRedirect(reverse("listing", kwargs={"listing_id":listing_id}))
+            return HttpResponseRedirect(
+                reverse("listing", kwargs={"listing_id": listing_id})
+            )
         if request.POST.get("cmnt"):
-            new_comment = Comment(commenter=request.user, listing=listing, text=request.POST.get("cmnt"))
+            new_comment = Comment(
+                commenter=request.user, listing=listing, text=request.POST.get("cmnt")
+            )
             new_comment.save()
         if request.POST.get("bd"):
             try:
@@ -69,18 +90,27 @@ def listing_view(request, listing_id):
                     if amount > price:
                         current_bid.highest_bid = False
                         current_bid.save()
-                        new_bid = Bid(buyer=request.user, listing=listing, amount=amount)
+                        new_bid = Bid(
+                            buyer=request.user, listing=listing, amount=amount
+                        )
                         new_bid.save()
                         messages.success(request, "Bid successful.")
                     else:
-                        messages.error(request, "Your bid must be greater than the current bid.")
+                        messages.error(
+                            request, "Your bid must be greater than the current bid."
+                        )
                 else:
                     if amount >= price:
-                        new_bid = Bid(buyer=request.user, listing=listing, amount=amount)
+                        new_bid = Bid(
+                            buyer=request.user, listing=listing, amount=amount
+                        )
                         new_bid.save()
                         messages.success(request, "Bid successful.")
                     else:
-                        messages.error(request, "Your bid must be at least as large as the starting price.")
+                        messages.error(
+                            request,
+                            "Your bid must be at least as large as the starting price.",
+                        )
         if request.POST.get("close"):
             if request.user == listing.seller:
                 listing.active_status = False
@@ -94,7 +124,7 @@ def listing_view(request, listing_id):
         listing = Listing.objects.get(pk=listing_id)
     except Listing.DoesNotExist:
         return HttpResponseRedirect(reverse("index"))
-   
+
     comments = Comment.objects.filter(listing=listing_id)
 
     try:
@@ -110,17 +140,20 @@ def listing_view(request, listing_id):
     except Bid.DoesNotExist:
         bid = None
 
-    return render(request, "auctions/listing.html", {
-        "listing": listing,
-        "comments": comments,
-        "watchlist": watchlist,
-        "bid": bid,
-    })
+    return render(
+        request,
+        "auctions/listing.html",
+        {
+            "listing": listing,
+            "comments": comments,
+            "watchlist": watchlist,
+            "bid": bid,
+        },
+    )
 
 
 def login_view(request):
     if request.method == "POST":
-
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
@@ -131,16 +164,15 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "auctions/login.html", {
-                "title": "Login",
-                "message": "Invalid username and/or password."
-            })
+            return render(
+                request,
+                "auctions/login.html",
+                {"title": "Login", "message": "Invalid username and/or password."},
+            )
     else:
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse("index"))
-        return render(request, "auctions/login.html", {
-            "title": "Login"
-        })
+        return render(request, "auctions/login.html", {"title": "Login"})
 
 
 def logout_view(request):
@@ -158,14 +190,19 @@ def new_listing(request):
             new_listing.save()
             form.save_m2m()
             messages.success(request, "Listing successfully created.")
-            return HttpResponseRedirect(reverse("listing", kwargs={"listing_id":new_listing.id}))
+            return HttpResponseRedirect(
+                reverse("listing", kwargs={"listing_id": new_listing.id})
+            )
         else:
-            messages.error(request, "Something went wrong. Did you omit a required field?")
+            messages.error(
+                request, "Something went wrong. Did you omit a required field?"
+            )
             return HttpResponseRedirect(reverse("new"))
-    return render(request, "auctions/create.html", {
-        "title": "Create Listing",
-        "form": ListingForm()
-    })
+    return render(
+        request,
+        "auctions/create.html",
+        {"title": "Create Listing", "form": ListingForm()},
+    )
 
 
 def register(request):
@@ -177,47 +214,58 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "auctions/register.html", {
-                "title": "Register",
-                "message": "Passwords must match."
-            })
+            return render(
+                request,
+                "auctions/register.html",
+                {"title": "Register", "message": "Passwords must match."},
+            )
 
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
         except IntegrityError:
-            return render(request, "auctions/register.html", {
-                "title": "Register",
-                "message": "Username already taken."
-            })
+            return render(
+                request,
+                "auctions/register.html",
+                {"title": "Register", "message": "Username already taken."},
+            )
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse("index"))
-        return render(request, "auctions/register.html", {
-            "title": "Register"
-        })
+        return render(request, "auctions/register.html", {"title": "Register"})
 
 
 @login_required
 def watchlist(request):
-    return render(request, "auctions/index.html", {
-        "title": "Watchlist",
-        "listings": request.user.watchlist.all()
-    })
+    return render(
+        request,
+        "auctions/index.html",
+        {"title": "Watchlist", "listings": request.user.watchlist.all()},
+    )
+
 
 @login_required
 def my_listings(request):
-    return render(request, "auctions/index.html", {
-        "title": "My Listings",
-        "listings": Listing.objects.filter(seller=request.user),
-    })
+    return render(
+        request,
+        "auctions/index.html",
+        {
+            "title": "My Listings",
+            "listings": Listing.objects.filter(seller=request.user),
+        },
+    )
+
 
 @login_required
 def bought_items(request):
-    return render(request, "auctions/index.html", {
-        "title": "Bought Items",
-        "listings": Listing.objects.filter(buyer=request.user)
-    })
+    return render(
+        request,
+        "auctions/index.html",
+        {
+            "title": "Bought Items",
+            "listings": Listing.objects.filter(buyer=request.user),
+        },
+    )

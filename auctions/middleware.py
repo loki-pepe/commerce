@@ -1,7 +1,7 @@
 from .models import Listing
 
-class AuctionsMiddleware(object):
 
+class AuctionsMiddleware(object):
     def __init__(self, get_response):
         self.get_response = get_response
 
