@@ -80,6 +80,7 @@ label {
 .listing-card img {
     max-width: 250px;
     max-height: 250px;
+    border-radius: 10px;
 }
 
 .listing-card .price {
