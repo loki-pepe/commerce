@@ -22,6 +22,7 @@ class ListingForm(ModelForm):
         widget=forms.TextInput(attrs={"placeholder": "$"}),
     )
     image = forms.URLField(
+        required=False,
         widget=forms.URLInput(attrs={"placeholder": "URL (optional)"})
     )
 
